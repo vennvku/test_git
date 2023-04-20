@@ -1,0 +1,161 @@
+1. Giới thiệu về Git
+- Git là một trong những hệ thống quản lý version khác nhau của Code miễn phí và open source
+- Git giúp theo dõi và kiểm soát các thay đổi code 
+- Git giúp đồng bộ hóa các phiên bản
+- Có thể dùng brand để tạo các nhánh mới để thử nhiệm các chức năng mới, nếu chức năng mới oke thì có thể gộp nhánh mới này với nhánh ban đầu, nếu không oke thì có thể bỏ qua nhánh này và qua trở lại nhánh ban đầu để phát triển code tiếp
+ - Git có thể quay lại các version cũ hơn của phiên bản code
+ 
+ 2. Giới thiệu về Repository(Repo)
+ - Là một kho chứa, lưu trữ Source Code mã nguồn
+ - Có 2 loại Repository:
+ + Local Repository: Lưu trữ local tại máy tính
+ + Remote Repository: Lưu trữ trên GitHub, GitLab, Bitbucket
+ - Tạo mới Repository:
+ + Local Repository: "Git init" ngay tại folder muốn tạo
+ 
+ 3. Giới thiệu về Commit
+ - Giúp ghi lại việc thêm hay thay đổi file hay thư mục nào vào Repository
+ - Khi thực hiện commit sẽ tạo ra một phiên bản mới để lưu lại sự khác biệt từ trạng trái commit trước đó
+ - Khi thực hiện commit thì phải nhập commit không được để trống và phải giải thích commit rõ ràng
+ 
+ 4. Về Working Tree và Index
+ - Trên Git, những thư mục được đặt trong sự quản lý của Git mà mọi người đang thực hiện công việc trong thực tế được gọi là working tree.
+ - Giữa repository và working tree tồn tại một nơi gọi là index. Index là nơi để chuẩn bị cho việc commit lên repository. 
+ Trên Git trạng thái sẽ được cập nhật trên Index, vì vậy muốn commit phải đưa file hoặc thư mục muốn commit vào trạng thái Index ==> Điều này giúp chỉ chọn một số file hay thư mục muốn commit thôi còn lại sẽ không ảnh hưởng
+ 
+ 5. Thiết lập ban đầu:
+ - $ git config --global user.name "<Tên người dùng>"
+ - $ git config --global user.email "<Địa chỉ mail>"
+ 
+ - Trong lệnh của git có thể thiết lập bí danh (aliases). Với lệnh sau đây sẽ có thể giản lược "checkout" thành "co" vẫn có thể thực hiện được.
+ - $ git config --global alias.co checkout
+ 
+ - Để kiểm tra trạng thái của working tree và index của thư mục dưới sự quản lý của Git thì sẽ sử dụng lệnh status.
+ - $ git status
+ 
+ - Để đăng ký file trong index thì sử dụng lệnh "add". Sẽ chỉ định file sẽ đăng ký vào index ở trong <file>. Có thể chỉ định nhiều cái bằng khoảng trắng (space) phân cách.
+ - $ git add <file>..
+ 
+ - $ git add .   ==> Dùng như thế này có thể đăng kí tất cả file vào index	
+ 
+ - Thực hiện commit:
+ - $ git commit -m "<commit>"
+ 
+ - Thay đổi tên commit:
+ - $ git commit --amend -m "<change_commit>"
+ 
+ - Kiểm tra lịch sử thay đổi của repository
+ - $ git log
+ 
+ - Khi cài đặt git, công cụ có tên gọi là gitk cũng sẽ đồng thời được cài đặt. Khi sử dụng công cụ này có thể kiểm tra lịch sử thay đổi bằng GUI.
+ - $ gitk
+ 
+ 6. Push lên remote repository
+ - Để chia sẻ lịch sử thay đổi của local repository mà bản thân đang có bằng remote repository, cần phải upload lịch sử thay đổi trong local repository.
+ 
+ - Nếu có remote repository chứa lịch sử thay đổi của ai đó, thì sẽ có thể sao chép toàn bộ repository và bản thân có thể thao tác trên phần công việc đó.
+ 
+ - Vì trong local repository đã clone về, lịch sử thay đổi cũng được sao chép nên có thể tham chiếu lịch sử hoàn toàn giống với repository gốc và có thể commit.
+ 
+ - Để cập nhật local repository từ remote repository thì thực hiện thao tác gọi là Pull.
+ 
+ - Khi thực hiện Pull, sẽ tải lịch sử thay đổi mới nhất từ remote repository về, rồi đưa nội dung đó vào local repository của bản thân.
+ 
+ - Thực hiện lệnh sau, sẽ đăng ký url của remote repository đã tạo ở trang trước bằng tên "origin". 
+ - $ git remote add origin https://github.com/vennvku/test_git.git
+ 
+ - Để push repository, sẽ sử dụng lệnh "push". <repository> là chỉ địa chỉ nơi sẽ push, <refspec> là chỉ branch sẽ push.
+ - $ git push <repository> <refspec>...
+ - $ git push -u origin master
+ 
+ - Để sao chép repository sẽ sử dụng lệnh "clone". <repository> là chỉ URL của remote repository, <directory> là chỉ tên thư mục nơi sẽ sao chép đến.
+ - $ git clone <repository> <directory>
+ 
+ - Trên repository đã clone, có thể lược bớt orgin master của tham số push.
+ 
+ - Để thực hiện pull sẽ sử dụng lệnh pull. Nếu tĩnh lược tên repository, thì sẽ thực hiện pull với repository được đăng ký với tên origin.
+ - $ git pull <repository> <refspec>...
+ - git push origin master
+ 
+7. Git merge
+- Git merge được dùng khi ta muốn gộp hai branch lại với nhau, thao tác này thường dùng để merge branch khác vào branch master trước khi push lên remote repository, hoặc merge hai branch thành một để giải quyết chung một task.
+- Git merge thường được sử dụng khi tạo chức năng mới
+- $ git merge <branch_name>
+
+8. Git rebase 
+- $ git rebase master
+- Nó sẽ đưa toàn bộ feature branch lên trên cùng của master.
+- Lợi ích của dùng rebase là chúng ta có history của project sạch sẽ hơn. Sẽ không có những merge commit dư thừa như trong lệnh merge
+
+9. Git Checkout
+- được sử dụng để chuyển đổi giữa các nhánh trong kho lưu trữ.
+- $ git branch: kiểm tra xem hiện tại có bao nhiêu nhánh brand
+- $ git checkout <branchname>  
+
+10. Cherry-pick
+- Là một cách để checkout một commit tại branch nhất định về branch hiện tại. Hay nói một cách dân dã thì cherry-pick dùng để bưng các thay đổi trong một commit trên một nhánh nào đó áp dụng về nhánh hiện tại.
+- $ git checkout master
+- $ git cherry-pick B3
+- $ git cherry-pick [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] [-S[<keyid>]] <commit>…​
+- $ git cherry-pick --continue
+- $ git cherry-pick --quit
+- $ git cherry-pick --abort
+
+Khác nhau merge với Cherry-pick Khi merge branch như trên đó là Git sẽ áp dụng các thanh đổi của commit mới nhất về nhánh hiện tại còn Cherry-pick thì có thể áp dụng các thanh đổi của commit bất kì về nhánh hiện tại
+
+11. Git stash
+
+- Khi thực hiện code trên Git, đột nhiên xuất hiện một vấn đề ở phần workload cũ khiến bạn phải tạm dừng công việc hiện tại để quay lại sửa gấp?
+
+- Bạn có thể tạo một branch mới để bắt tay vào việc sửa lại. Với dự án còn đang dở dang của mình, các lệnh git cơ bản sẽ có thể đặt ra cho bạn 2 lựa chọn:
+- Sử dụng git reset– hard để xóa những thay đổi đã được commit.
+- Lưu lại công việc chưa hoàn tất và biến nó thành commit mới.
+
+Tuy nhiên, nếu chọn cách 1, nó sẽ làm mất tất cả công việc của nó. Cách 2 sẽ có thể dẫn đến một phần commit không có ý nghĩa. 
+
+- Trong tình huống này, Git stash có thể phát huy một cách hiệu quả những công dụng của nó. Chúng vừa có thể giúp bạn quay trở lại workload cũ để sửa chữa, vừa có thể giúp bạn lưu lại branch đang làm.
+
+- Có thể hiểu một cách đơn giản, Git stash chính là các nút tạm dừng trong quá trình code của bạn đang diễn ra.
+
+- Trong khi sử dụng Git stash, bạn cần phải tuân theo trình tự sau đây:
+  + Lưu các thay đổi vào nhánh A
+  + Chạy Git stash
+  + Kiểm tra lại nhánh B
+  + Sửa lỗi nhánh B
+  + Cam kết và tùy chọn đẩy đến điều khiển từ xa
+  + Kiểm tra lại nhánh A
+  + Chạy Git stash pop để lấy lại các thay đổi đã được lưu trữ của bạn.
+  
+- Theo mặc định, Git stash lưu trữ các thay đổi không được can thiệp kể cả các tệp theo giai đoạn và không được phân theo giai đoạn. Đồng thời, chúng giúp bỏ qua các tệp chưa được theo dõi và bị bỏ qua trước đó. 
+
+- git stash -u hoặc git stash –include-untracked lưu trữ các tệp không được theo dõi.
+- git stash -a hoặc git stash –all lưu trữ các tệp không được theo dõi và các tệp bị bỏ qua.
+
+- Để lưu trữ các tệp cụ thể, bạn có thể sử dụng lệnh git stash -p hoặc git stash –patch:
+
+- Để liệt kê các kho lưu trữ của mình, bạn có thể sử dụng các lệnh Git stash list.
+
+- Đối với việc truy xuất các thay đổi đã lưu trữ, bạn có thể sử dụng các lệnh git stash apply và git stash pop.
+
+- git stash clear làm trống danh sách lưu trữ bằng cách xóa tất cả các kho lưu trữ.
+- git stash drop <stash_id> xóa một kho lưu trữ cụ thể khỏi danh sách lưu trữ.
+- Để kiểm tra chênh lệch kho lưu trữ, bạn có thể sử dụng lệnh: git stash show <stash_id>.
+ + Để có được sự khác biệt chi tiết hơn, hãy chuyển cờ –patch hoặc -p:
+
+- Chắc chắn trong quá trình làm việc, bạn đã từng gặp phải tình huống những thay đổi trong nhánh và kho lưu trữ khác nhau. Điều này gây ra những xung đột và bạn phải cố gắng đăng ký lại kho lưu trữ.
+
+- Cách khắc phục nhanh nhất lỗi này chính là sử dụng lệnh Git stash branch <new_branch_name stash_id>. Lệnh này tạo ra một nhánh mới dựa trên những cam kết mà kho lưu trữ được tạo ra từ đó. Đồng thời bật các thay đổi được lưu trữ vào nó như sau:
+
+12. Gitflow Workflow 
+- Gitflow Workflow định nghĩa một cấu trúc phân nhánh nghiêm ngặt xung quanh bản release của dự án. 
+- Gitflow chỉ là một ý tưởng trừu tượng về quy trình sử dụng Git, Nó chỉ ra cách thức setup các loại branchs khác nhau và cách thức để merge chúng lại với nhau.
+
+- Master: Master branchs có sẵn trong git và là branchs chứa mã nguồn khởi tạo của ứng dụng và các version đã sẵn sàng để realease cho người dùng có thể sử dụng (đặt Tag trên mỗi version). Thường cấu hình cho manage tương tác.
+
+- Hotfix: Được base trên nhánh master để sửa nhanh những lỗi trên UIT hoặc sửa những cấu hình đặc biệt chỉ có trên môi trường productions.
+
+- Release: Trước khi Release một phần mềm dev team cần được tạo ra để kiểm tra lại lần cuối trước đi release sản phần để người dùng có thể sử dụng (Thuông thường mã nguồn tại thời điểm này sẽ tạo ra bản build để test và kiểm tra lại bussiness).
+
+- Develop: Được khởi tạo từ master branches để lưu lại tất cả lịch sử thay đổi của mã nguồn. Develop branchs là merge code của tất cả các branchs feature.
+
+- Feature: Được base trên branchs Develop. Mỗi khi phát triển một feature mới chúng ta cần tạo một branchs để việt mã nguồn cho từng feature. 
